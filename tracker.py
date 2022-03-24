@@ -30,12 +30,14 @@ Note the actual implementation of the ORM is hidden and so it
 could be replaced with PostgreSQL or Pandas or straight python lists
 
 '''
+import sys
 
 #from transactions import Transaction
 from category import Category
-import sys
+from transactions import Transaction
 
-#transactions = Transaction('tracker.db')
+
+# transactions = Transaction('tracker.db')
 category = Category('tracker.db')
 
 
@@ -55,9 +57,6 @@ menu = '''
 10. summarize transactions by category
 11. print this menu
 '''
-
-
-
 
 def process_choice(choice):
 
@@ -105,8 +104,7 @@ def print_transactions(items):
         print('no items to print')
         return
     print('\n')
-    print("%-10s %-10d %-10s %-10d %-30s"%(
-        'item #','amount','category','date','description'))
+    print("%-10s %-10d %-10s %-10d %-30s"%('item #','amount','category','date','description'))
     print('-'*40)
     for item in items:
         values = tuple(item.values()) 
