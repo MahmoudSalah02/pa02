@@ -2,14 +2,13 @@ import sqlite3
 
 def to_trans_dict(trans_tuple):
     ''' trans is a transaction tuple (rowid, itemCount, amount, category, date, description)'''
-    trans = {'rowid':trans_tuple[0], 'itemCount':trans_tuple[1], 'amount':trans_tuple[2], 
-             'category':trans_tuple[3], 'date':trans_tuple[4], 'description':trans_tuple[5],
-            }
+    trans = {'rowid':trans_tuple[0], 'itemCount':trans_tuple[1], 'amount':trans_tuple[2], 'category':trans_tuple[3], 
+    'date':trans_tuple[4], 'description':trans_tuple[5]}
     return trans
 
 def to_trans_dict_list(trans_tuple):
     ''' convert a list of transaction tuples into a list of dictionaries'''
-    return [to_trans_dict(trans_tuple) for cat in trans_tuple]
+    return [to_trans_dict(trans) for trans in trans_tuple]
 
 class Transaction():
     ''' Transaction represents a table of Transcations'''
@@ -72,7 +71,7 @@ class Transaction():
                         date=(?),
                         description=(?)
                         WHERE rowid=(?);
-        ''',(item['itemCount'],item['amount'],item['category'],item['date'], item['description']))
+        ''',(item['itemCount'],item['amount'],item['category'],item['date'], item['description'], rowid))
         con.commit()
         con.close()
 
@@ -87,3 +86,44 @@ class Transaction():
         ''',(rowid,))
         con.commit()
         con.close()
+<<<<<<< HEAD
+=======
+
+    def sort_by_month(self,month):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT rowid, * from transactions where substr (date,1,2) like (?)''',(month,))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+        
+
+    def sort_by_year(self,year):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT rowid, * from transactions where substr (date,7,10) like (?)''',(year,))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+
+    def sort_by_date(self,date):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT rowid, * from transactions where date like (?) ''',(date,))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+    
+    def sort_by_category(self,category):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT rowid, * from transactions where category like (?)''',(category,))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+    
+>>>>>>> da0c1cbd83f2e6444a13c36218abc81d9c9ad52f
