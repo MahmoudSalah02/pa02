@@ -90,7 +90,7 @@ class Transaction():
     def sort_by_month(self,month):
         con = sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT * from transactions where substr ('date',1,2) = (?)''',(month))
+        cur.execute('''SELECT rowid, * from transactions where substr (date,1,2) like (?)''',(month,))
         transactions = cur.fetchall()
         con.commit()
         con.close()
@@ -100,7 +100,7 @@ class Transaction():
     def sort_by_year(self,year):
         con = sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT * from transactions where substr ('date',7,10) = (?)''',(year))
+        cur.execute('''SELECT rowid, * from transactions where substr (date,7,10) like (?)''',(year,))
         transactions = cur.fetchall()
         con.commit()
         con.close()
@@ -109,7 +109,7 @@ class Transaction():
     def sort_by_date(self,date):
         con = sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT * from transactions where date = (?) ''',(date))
+        cur.execute('''SELECT rowid, * from transactions where date like (?) ''',(date,))
         transactions = cur.fetchall()
         con.commit()
         con.close()
@@ -118,7 +118,7 @@ class Transaction():
     def sort_by_category(self,category):
         con = sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT * from transactions where category = (?)''',(category))
+        cur.execute('''SELECT rowid, * from transactions where category like (?)''',(category,))
         transactions = cur.fetchall()
         con.commit()
         con.close()

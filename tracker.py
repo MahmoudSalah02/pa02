@@ -92,7 +92,7 @@ def process_choice(choice):
         id = input('Input the row ID to be deleted')
         transactions.delete(id)
     elif choice=='7':
-        date = input('Input the date (MMDDYYYY): ')
+        date = input('Input the date (MM-DD-YYYY): ')
         trans = transactions.sort_by_date(date)
         print_transactions(trans)
     elif choice=='8':
@@ -100,8 +100,8 @@ def process_choice(choice):
         trans = transactions.sort_by_month(month)
         print_transactions(trans)
     elif choice=='9':
-        year = input('Input the month (Just the year): ')
-        trans = transactions.sort_by_month(year)
+        year = input('Input the year (Just the year): ')
+        trans = transactions.sort_by_year(year)
         print_transactions(trans)
     elif choice=='10':
         category_ = input('Input the category: ')
