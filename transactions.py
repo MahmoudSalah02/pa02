@@ -9,7 +9,7 @@ def to_trans_dict(trans_tuple):
 
 def to_trans_dict_list(trans_tuple):
     ''' convert a list of transaction tuples into a list of dictionaries'''
-    return [to_trans_dict(trans_tuple) for cat in trans_tuple]
+    return [to_trans_dict(trans_tuple) for trans in trans_tuple]
 
 class Transaction():
     ''' Transaction represents a table of Transcations'''

@@ -98,17 +98,6 @@ def toplevel():
 # here are some helper functions
 #
 
-def print_transactions(items):
-    ''' print the transactions '''
-    if len(items)==0:
-        print('no items to print')
-        return
-    print('\n')
-    print("%-10s %-10d %-10s %-10d %-30s"%('item #','amount','category','date','description'))
-    print('-'*40)
-    for item in items:
-        values = tuple(item.values()) 
-        print("%-10s %-10d %-10s %-10d %-30s"%values)
 
 def print_category(cat):
     print("%-3d %-10s %-30s"%(cat['rowid'],cat['name'],cat['desc']))
@@ -119,8 +108,19 @@ def print_categories(cats):
     for cat in cats:
         print_category(cat)
 
+def print_transaction(trans):
+    print("%-5d %-10s %-10s %-10s %-10s %-30s"%(trans['rowid'], trans['itemCount'],trans['amount'],trans['category'],trans['date'], trans['description']))
+
+def print_transactions(trans):
+    print("%-5s %-10s %-10s %-10s %-10s %-30s"%('rowid','item','amount','category','date','description'))
+    print('-'*75)
+    for tran in trans:
+        print_transaction(tran)
 
 # here is the main call!
 
 toplevel()
+
+
+
 
