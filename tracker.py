@@ -37,7 +37,7 @@ from category import Category
 from transactions import Transaction
 
 
-# transactions = Transaction('tracker.db')
+transactions = Transaction('tracker.db')
 category = Category('tracker.db')
 
 
@@ -77,6 +77,33 @@ def process_choice(choice):
         desc = input("new category description: ")
         cat = {'name':name, 'desc':desc}
         category.update(rowid,cat)
+
+    #5.add transaction feature by Ni Jian
+    elif choice=='5':
+        print("adding transaction")
+        itemCount = int(input("itemCount: "))
+        amount = int(input("amount: "))
+        cats = category.select_all()
+        print_categories(cats)
+        itemCategory = input("select the category's name: ")
+        #print(category['name'])
+
+        found = False
+        for i in range(len(cats)):            
+            if itemCategory == cats[i]['name']:
+                found = True
+                break
+            else:
+                continue
+
+        if found:
+            date = input("date: ")
+            desc = input("the item description: ")
+            item = {'itemCount':itemCount, 'amount':amount, 'category':itemCategory, 'date':date, 'description':desc}
+            transactions.add(item)
+        else:
+            print('category name not found')
+
     else:
         print("choice",choice,"not yet implemented")
 
