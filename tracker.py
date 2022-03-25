@@ -109,14 +109,7 @@ def process_choice(choice):
     elif choice=='4':
         transac= transactions.select_all()
         print_transactions(transac)
-    elif choice=='5':
-        itemcount = input("Item #: ")
-        amount = input("Amount: ")
-        category_ = input("Category: ")
-        date = input("Date (MM-DD-YYYY): ")
-        description = input("Description: ")
-        trans = {'itemCount':itemcount, 'amount':amount, 'category':category_, 'date': date, 'description':description}
-        transactions.add(trans)
+
     elif choice=='6':
         id = input('Input the row ID to be deleted')
         transactions.delete(id)
