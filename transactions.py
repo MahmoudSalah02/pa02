@@ -2,14 +2,13 @@ import sqlite3
 
 def to_trans_dict(trans_tuple):
     ''' trans is a transaction tuple (rowid, itemCount, amount, category, date, description)'''
-    trans = {'rowid':trans_tuple[0], 'itemCount':trans_tuple[1], 'amount':trans_tuple[2], 
-             'category':trans_tuple[3], 'date':trans_tuple[4], 'description':trans_tuple[5],
-            }
+    trans = {'rowid':trans_tuple[0], 'itemCount':trans_tuple[1], 'amount':trans_tuple[2], 'category':trans_tuple[3], 
+    'date':trans_tuple[4], 'description':trans_tuple[5]}
     return trans
 
 def to_trans_dict_list(trans_tuple):
     ''' convert a list of transaction tuples into a list of dictionaries'''
-    return [to_trans_dict(trans_tuple) for trans in trans_tuple]
+    return [to_trans_dict(trans) for trans in trans_tuple]
 
 class Transaction():
     ''' Transaction represents a table of Transcations'''
@@ -50,7 +49,7 @@ class Transaction():
         '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("INSERT INTO transactions VALUES(?,?,?.?,?)",
+        cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?)",
         (item['itemCount'],item['amount'],item['category'],item['date'], item['description']))
         con.commit()
         cur.execute("SELECT last_insert_rowid()")
@@ -72,7 +71,7 @@ class Transaction():
                         date=(?),
                         description=(?)
                         WHERE rowid=(?);
-        ''',(item['itemCount'],item['amount'],item['category'],item['date'], item['description']))
+        ''',(item['itemCount'],item['amount'],item['category'],item['date'], item['description'], rowid))
         con.commit()
         con.close()
 
@@ -87,3 +86,41 @@ class Transaction():
         ''',(rowid,))
         con.commit()
         con.close()
+
+    def sort_by_month(self,month):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT * from transactions where substr ('date',1,2) = (?)''',(month))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+        
+
+    def sort_by_year(self,year):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT * from transactions where substr ('date',7,10) = (?)''',(year))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+
+    def sort_by_date(self,date):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT * from transactions where date = (?) ''',(date))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+    
+    def sort_by_category(self,category):
+        con = sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT * from transactions where category = (?)''',(category))
+        transactions = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(transactions)
+    

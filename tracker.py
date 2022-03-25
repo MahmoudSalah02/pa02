@@ -32,12 +32,12 @@ could be replaced with PostgreSQL or Pandas or straight python lists
 '''
 import sys
 
-#from transactions import Transaction
+
 from category import Category
 from transactions import Transaction
 
 
-# transactions = Transaction('tracker.db')
+transactions = Transaction('tracker.db')
 category = Category('tracker.db')
 
 
@@ -77,6 +77,38 @@ def process_choice(choice):
         desc = input("new category description: ")
         cat = {'name':name, 'desc':desc}
         category.update(rowid,cat)
+    elif choice=='4':
+        transac= transactions.select_all()
+        print_transactions(transac)
+    elif choice=='5':
+        itemcount = input("Item #: ")
+        amount = input("Amount: ")
+        category_ = input("Category: ")
+        date = input("Date (MM-DD-YYYY): ")
+        description = input("Description: ")
+        trans = {'itemCount':itemcount, 'amount':amount, 'category':category_, 'date': date, 'description':description}
+        transactions.add(trans)
+    elif choice=='6':
+        id = input('Input the row ID to be deleted')
+        transactions.delete(id)
+    elif choice=='7':
+        date = input('Input the date (MMDDYYYY): ')
+        trans = transactions.sort_by_date(date)
+        print_transactions(trans)
+    elif choice=='8':
+        month = input('Input the month (Just the month): ')
+        trans = transactions.sort_by_month(month)
+        print_transactions(trans)
+    elif choice=='9':
+        year = input('Input the month (Just the year): ')
+        trans = transactions.sort_by_month(year)
+        print_transactions(trans)
+    elif choice=='10':
+        category_ = input('Input the category: ')
+        trans = transactions.sort_by_category(category_)
+        print_transactions(trans)
+    elif choice=='11':
+         print(menu)
     else:
         print("choice",choice,"not yet implemented")
 
@@ -109,10 +141,10 @@ def print_categories(cats):
         print_category(cat)
 
 def print_transaction(trans):
-    print("%-5d %-10s %-10s %-10s %-10s %-30s"%(trans['rowid'], trans['itemCount'],trans['amount'],trans['category'],trans['date'], trans['description']))
+    print("%-5d %-10s %-10s %-10s %-20s %-30s"%(trans['rowid'], trans['itemCount'],trans['amount'],trans['category'],trans['date'], trans['description']))
 
 def print_transactions(trans):
-    print("%-5s %-10s %-10s %-10s %-10s %-30s"%('rowid','item','amount','category','date','description'))
+    print("%-5s %-10s %-10s %-10s %-20s %-30s"%('rowid','item','amount','category','date','description'))
     print('-'*75)
     for tran in trans:
         print_transaction(tran)
