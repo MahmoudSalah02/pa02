@@ -81,10 +81,10 @@ def test_add(med_db):
             'date':'test_add_date',
             'description':'test_add_description',
             }
-    trans0 = med_db.select_all()
+    trans_list0 = med_db.select_all()
     rowid = med_db.add(trans0)
-    trans1 = med_db.select_all()
-    assert len(trans1) == len(trans0) + 1
+    trans_list1 = med_db.select_all()
+    assert len(trans_list1) == len(trans_list0) + 1
     trans1 = med_db.select_one(rowid)
     assert trans1['itemCount']==trans0['itemCount']
     assert trans1['amount']==trans0['amount']
@@ -97,7 +97,7 @@ def test_add(med_db):
 def test_delete(med_db):
     ''' add a transaction to db, delete it, and see that the size changes'''
     # first we get the initial table
-    trans0 = med_db.select_all()
+    trans_list0 = med_db.select_all()
 
     # then we add this transaction to the table and get the new list of rows
     trans0 = {'itemCount':1,
@@ -108,14 +108,14 @@ def test_delete(med_db):
             }
             
     rowid = med_db.add(trans0)
-    trans1 = med_db.select_all()
+    trans_list1 = med_db.select_all()
 
     # now we delete the transaction and again get the new list of rows
     med_db.delete(rowid)
-    trans2 = med_db.select_all()
+    trans_list2 = med_db.select_all()
 
-    assert len(trans0)==len(trans2)
-    assert len(trans2) == len(trans1)-1
+    assert len(trans_list0)==len(trans_list2)
+    assert len(trans_list2) == len(trans_list1)-1
 
 @pytest.mark.update
 def test_update(med_db):
@@ -128,7 +128,7 @@ def test_update(med_db):
             'date':'test_add_date',
             'description':'test_add_description',
             }
-    rowid = med_db.add(cat0)
+    rowid = med_db.add(trans0)
 
     # now we upate the transaction
     trans1 = {'itemCount':2,
