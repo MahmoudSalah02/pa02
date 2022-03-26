@@ -77,7 +77,6 @@ def process_choice(choice):
         desc = input("new category description: ")
         cat = {'name':name, 'desc':desc}
         category.update(rowid,cat)
-<<<<<<< HEAD
 
     #5.add transaction feature by Ni Jian
     elif choice=='5':
@@ -101,11 +100,10 @@ def process_choice(choice):
             date = input("date: ")
             description = input("the item description: ")
             trans = {'itemCount':itemCount, 'amount':amount, 'category':itemCategory, 'date':date, 'description':description}
-            transactions.add(item)
+            transactions.add(trans)
         else:
             print('category name not found')
 
-=======
     elif choice=='4':
         transac= transactions.select_all()
         print_transactions(transac)
@@ -131,7 +129,7 @@ def process_choice(choice):
         print_transactions(trans)
     elif choice=='11':
          print(menu)
->>>>>>> da0c1cbd83f2e6444a13c36218abc81d9c9ad52f
+
     else:
         print("choice",choice,"not yet implemented")
 

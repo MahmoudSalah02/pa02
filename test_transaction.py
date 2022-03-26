@@ -20,12 +20,12 @@ def empty_db(dbfile):
 @pytest.fixture
 def small_db(empty_db):
     ''' create a small database, and tear it down later'''
-    trans1 =  {'itemCount':1, 'amount':1, 'category':food, 
-    'date':01-01-2011, 'description':I bought 1 egg}
-    trans2 = {'itemCount':1, 'amount':50000, 'category':car, 
-    'date':04-01-2011, 'description':I bought 1 car}
-    trans3 = {'itemCount':1, 'amount':10, 'category':fun, 
-    'date':07-07-2011, 'description':I watched 1 movie}
+    trans1 =  {'itemCount':1, 'amount':1, 'category':'food', 
+    'date':'01-01-2011', 'description':'I bought 1 egg'}
+    trans2 = {'itemCount':1, 'amount':50000, 'category':'car', 
+    'date':'04-01-2011', 'description':'I bought 1 car'}
+    trans3 = {'itemCount':1, 'amount':10, 'category':'fun', 
+    'date':'07-07-2011', 'description':'I watched 1 movie'}
     id1=empty_db.add(trans1)
     id2=empty_db.add(trans2)
     id3=empty_db.add(trans3)
@@ -75,11 +75,11 @@ def test_to_trans_dict():
 def test_add(med_db):
     ''' add a transaction to db, the select it, then delete it'''
 
-    trans0 = {'itemCount':1
-            'amount':1
-            'category':'test_add'
-            'date':'test_add_date'
-            'description':'test_add_description'
+    trans0 = {'itemCount':1,
+            'amount':1,
+            'category':'test_add',
+            'date':'test_add_date',
+            'description':'test_add_description',
             }
     trans0 = med_db.select_all()
     rowid = med_db.add(trans0)
@@ -100,11 +100,11 @@ def test_delete(med_db):
     trans0 = med_db.select_all()
 
     # then we add this transaction to the table and get the new list of rows
-    trans0 = {'itemCount':1
-            'amount':1
-            'category':'test_add'
-            'date':'test_add_date'
-            'description':'test_add_description'
+    trans0 = {'itemCount':1,
+            'amount':1,
+            'category':'test_add',
+            'date':'test_add_date',
+            'description':'test_add_description',
             }
             
     rowid = med_db.add(trans0)
@@ -122,20 +122,20 @@ def test_update(med_db):
     ''' add a transaction to db, updates it, and see that it changes'''
 
     # then we add this transaction to the table and get the new list of rows
-    trans0 = {'itemCount':1
-            'amount':1
-            'category':'test_add'
-            'date':'test_add_date'
-            'description':'test_add_description'
+    trans0 = {'itemCount':1,
+            'amount':1,
+            'category':'test_add',
+            'date':'test_add_date',
+            'description':'test_add_description',
             }
     rowid = med_db.add(cat0)
 
     # now we upate the transaction
-    trans1 = {'itemCount':2
-            'amount':3
-            'category':'new_add'
-            'date':'new_add_date'
-            'description':'new_add_description'
+    trans1 = {'itemCount':2,
+            'amount':3,
+            'category':'new_add',
+            'date':'new_add_date',
+            'description':'new_add_description',
             }
     med_db.update(rowid,trans1)
 

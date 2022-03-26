@@ -86,8 +86,7 @@ class Transaction():
         ''',(rowid,))
         con.commit()
         con.close()
-<<<<<<< HEAD
-=======
+
 
     def sort_by_month(self,month):
         con = sqlite3.connect(self.dbfile)
@@ -126,4 +125,4 @@ class Transaction():
         con.close()
         return to_trans_dict_list(transactions)
     
->>>>>>> da0c1cbd83f2e6444a13c36218abc81d9c9ad52f
+
